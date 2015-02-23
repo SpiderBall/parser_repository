@@ -2,10 +2,9 @@
 %{
 
 #include <stdio.h>
-using namespace std;
 
-%token ID_SIZE 100
-%token MAX_CHILDREN 3
+#define ID_SIZE 100
+#define MAX_CHILDREN 3
 
 /* a tree node definition */
 struct Node {
@@ -108,10 +107,10 @@ int main(){ print_tree(seq, 20); return 0; }
 %start stat
 %token IDENTIFIER      		100
 %token VALUE  			 	101
-%token PLUS    				102
+%token <int>PLUS    				102
 %token MINUS   				103
 %token DIVIDE  				104
-%token TIMES        		105
+%token <int>TIMES        		105
 %token LESS       			106
 %token GREATER    			107
 %token LESSEQ      			108
@@ -173,80 +172,75 @@ not_expr: NOT stat
 
 /*these should always be to the right of some statment */
 
-multdiv_expr: stat TIMES stat | stat DIVIDE stat 
-{
-	if(node->type == TIMES)
-	{
-		$$=make_node(TIMES, 0, "");
-		attach_node($$, $1);
-		attach_node($$, $3);
-	}
-	else
-	{
-		$$=make_node(DIVIDE, 0, "");
-		attach_node($$, $1);
-		attach_node($$, $3);
-	}
-} 
+multdiv_expr: stat TIMES stat
+			{
 
-plusmin_expr: stat PLUS stat | stat MINUS stat 
-{
+				$$=make_node(TIMES, 0, "");
+				attach_node($$, $1);
+				attach_node($$, $3);
+			}
 
-	if(node->type == PLUS)
-	{
-		$$=make_node(PLUS, 0, "");
-		attach_node($$, $1);
-		attach_node($$, $3);
-	}
-	else
-	{
-		$$=make_node(MINUS, 0, "");
-		attach_node($$, $1);
-		attach_node($$, $3);
-	}
-}
+			| stat DIVIDE stat 
+			{
+				$$=make_node(DIVIDE, 0, "");
+				attach_node($$, $1);
+				attach_node($$, $3);
+			} 
 
-conditional_expr: stat GREATER stat 
-				| stat LESS stat 
-				| stat GREATEREQ stat 
+plusmin_expr: stat PLUS stat 
+			{
+
+				$$=make_node(PLUS, 0, "");
+				attach_node($$, $1);
+				attach_node($$, $3);
+
+			}
+			| stat MINUS stat 
+
+			{
+				$$=make_node(MINUS, 0, "");
+				attach_node($$, $1);
+				attach_node($$, $3);
+			}
+
+conditional_expr: stat GREATER stat
+				{
+					$$=make_node(GREATER, 0, "");
+					attach_node($$, $1);
+					attach_node($$, $3);
+				}
+
+				| stat LESS stat
+				{
+					$$=make_node(LESS, 0, "");
+					attach_node($$, $1);
+					attach_node($$, $3);
+				}
+				| stat GREATEREQ stat
+				{
+					$$=make_node(GREATEREQ, 0, "");
+					attach_node($$, $1);
+					attach_node($$, $3);
+				}
 				| stat LESSEQ stat
+				{
+					$$=make_node(LESSEQ, 0, "");
+					attach_node($$, $1);
+					attach_node($$, $3);
+				}
 				| stat EQUALS stat
+				{
+					$$=make_node(EQUALS, 0, "");
+					attach_node($$, $1);
+					attach_node($$, $3);
+				}
 				| stat NEQUALS stat
-{
-	switch(node->type)
-	{
-		case GREATER:
-			$$=make_node(GREATER, 0, "");
-			attach_node($$, $1);
-			attach_node($$, $3);
-			break;
-		case LESS:
-			$$=make_node(LESS, 0, "");
-			attach_node($$, $1);
-			attach_node($$, $3);
-			break
-		case GREATEREQ:
-			$$=make_node(GREATEREQ, 0, "");
-			attach_node($$, $1);
-			attach_node($$, $3);
-			break;
-		case LESSEQ:
-			$$=make_node(LESSEQ, 0, "");
-			attach_node($$, $1);
-			attach_node($$, $3);
-			break;
-		case EQUALS:
-			$$=make_node(EQUALS, 0, "");
-			attach_node($$, $1);
-			attach_node($$, $3);
-			break;
-		case NEQUALS:
-			$$=make_node(NEQUALS, 0, "");
-			attach_node($$, $1);
-			attach_node($$, $3);
-			break;
-	}
-}
+				{
+					$$=make_node(NEQUALS, 0, "");
+					attach_node($$, $1);
+					attach_node($$, $3);
+				}
+
 
 and_expr: stat AND stat 
 {
@@ -304,7 +298,7 @@ print: PRINT stat SEMICOLON
 	attach_node($$, $2);
 }
 
-value: VALUE{$$=make_node(VALUE, value, "");} 
+value: VALUE{$$=make_node(VALUE, 0, "");} 
 
 seq: START stat END { $$ = $2;}
 
