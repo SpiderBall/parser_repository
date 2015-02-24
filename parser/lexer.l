@@ -1,4 +1,5 @@
 %{
+#include "sl_parser.tab.h"
 %}
 
 %option noyywrap
@@ -10,18 +11,18 @@
 "+"                     {return PLUS;}
 "-"                     {return MINUS;}
 "/"                     {return DIVIDE;}
-"*"                     {return MULTIPLY;}
-"<"                     {return LESS_THAN;}
-">"                     {return GREATER_THAN;}
-"<="                    {return LESS_THAN_OR_EQUAL;}
-">="                    {return GREATER_THAN_OR_EQUAL;}
-"=="                    {return EQUAL;}
-"!="                    {return NOT_EQUAL;}
+"*"                     {return TIMES;}
+"<"                     {return LESS;}
+">"                     {return GREATER;}
+"<="                    {return LESSEQ;}
+">="                    {return GREATEREQ;}
+"=="                    {return EQUALS;}
+"!="                    {return NEQUALS;}
 "&&"                    {return AND;}
 "||"                    {return OR;}
 "!"                     {return NOT;}
 ";"                     {return SEMICOLON;}
-":="                    {return SET_EQUAL;}
+":="                    {return ASSIGN;}
 "("                     {return OPEN_PARENS;}
 ")"                     {return CLOSE_PARENS;}
 "begin"                 {return START;}
@@ -37,6 +38,7 @@
 .                       {printf("unexpected character\n");}
 %%
 
+/*
 int main(int argc, char* argv[])
 {
 	stdin = fopen(argv[1], "r");	
@@ -44,8 +46,8 @@ int main(int argc, char* argv[])
 	do {
     		token = yylex( );
     		printf("%d\n",token);
-    		/* handle each type of token */
+//    		 handle each type of token 
 
   	} while(token != 0);
         return 0;
-}
+} */

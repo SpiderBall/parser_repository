@@ -829,37 +829,37 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 14 "lexer.l"
-{return MULTIPLY;}
+{return TIMES;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 15 "lexer.l"
-{return LESS_THAN;}
+{return LESS;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 16 "lexer.l"
-{return GREATER_THAN;}
+{return GREATER;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 17 "lexer.l"
-{return LESS_THAN_OR_EQUAL;}
+{return LESSEQ;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 18 "lexer.l"
-{return GREATER_THAN_OR_EQUAL;}
+{return GREATEREQ;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 19 "lexer.l"
-{return EQUAL;}
+{return EQUALS;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 20 "lexer.l"
-{return NOT_EQUAL;}
+{return NEQUALS;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
@@ -884,7 +884,7 @@ YY_RULE_SETUP
 case 17:
 YY_RULE_SETUP
 #line 25 "lexer.l"
-{return SET_EQUAL;}
+{return ASSIGN;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
@@ -1959,6 +1959,7 @@ void yyfree (void * ptr )
 
 
 
+/*
 int main(int argc, char* argv[])
 {
 	stdin = fopen(argv[1], "r");	
@@ -1966,9 +1967,9 @@ int main(int argc, char* argv[])
 	do {
     		token = yylex();
     		printf("%d\n",token);
-    		/* handle each type of token */
+//    		 handle each type of token 
 
   	} while(token != 0);
         return 0;
-}
+} */
 
