@@ -8,7 +8,6 @@
 #define ID_SIZE 100
 #define MAX_CHILDREN 3
 #define STATEMENT 500//just so this prints out when a stat is read in
-#define STATEMENTS 1000
 
 /* a tree node definition */
 struct Node {
@@ -99,35 +98,37 @@ struct Node* tree;
 %%
 //part III
 
-stat: assign           { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
-	| if               { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
-	| ifelse           { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
-	| while            { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
-	| print            { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
-	| seq              { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
+stat: assign           { $$=$1;}
+	| if               { $$=$1;}
+	| ifelse           { $$=$1;}
+	| while            { $$=$1;}
+	| print            { $$=$1;}
+	| seq              { $$=$1;}
 
 
 
 
 /* operators in order of precedence */
-paren_expr: OPEN_PARENS paren_expr CLOSE_PARENS {$$=$2;}
-		  | value {$$ = $1;}
+paren_expr: OPEN_PARENS paren_expr CLOSE_PARENS {printf("paren_expr\n");$$=$2;}
+		  | value {printf("going up\n");$$ = $1;}
 
 
 
 not_expr: NOT not_expr 
 					{
+						printf("not_expr\n");
 						$$ = make_node(NOT, 0, "");
 						attach_node($$, $2);  
 						/* not should always be to the left of a statement*/
 					} 
-				| paren_expr {$$ = $1;}
+				| paren_expr {printf("going up\n");$$ = $1;}
 
 
 
 
 multdiv_expr: multdiv_expr TIMES not_expr
 					{
+						printf("mult_expr\n");
 						$$=make_node(TIMES, 0, "");
 						attach_node($$, $1);
 						attach_node($$, $3);
@@ -135,11 +136,12 @@ multdiv_expr: multdiv_expr TIMES not_expr
 
 				| multdiv_expr DIVIDE not_expr
 					{
+						printf("div_expr\n");
 						$$=make_node(DIVIDE, 0, "");
 						attach_node($$, $1);
 						attach_node($$, $3);
 					} 
-				| not_expr {$$ = $1;}	
+				| not_expr {printf("going up\n");$$ = $1;}	
 
 
 
@@ -147,6 +149,7 @@ multdiv_expr: multdiv_expr TIMES not_expr
 plusmin_expr: plusmin_expr PLUS multdiv_expr
 					{
 
+						printf("plus_expr\n");
 						$$=make_node(PLUS, 0, "");
 						attach_node($$, $1);
 						attach_node($$, $3);
@@ -155,17 +158,19 @@ plusmin_expr: plusmin_expr PLUS multdiv_expr
 				| plusmin_expr MINUS multdiv_expr 
 
 					{
+						printf("min_expr\n");
 						$$=make_node(MINUS, 0, "");
 						attach_node($$, $1);
 						attach_node($$, $3);
 					}
-				| multdiv_expr {$$ = $1;}
+				| multdiv_expr {printf("going up\n");$$ = $1;}
 
 
 
 
 conditional_expr: conditional_expr GREATER plusmin_expr
 					{
+						printf("greater\n");
 						$$=make_node(GREATER, 0, "");
 						attach_node($$, $1);
 						attach_node($$, $3);
@@ -173,62 +178,70 @@ conditional_expr: conditional_expr GREATER plusmin_expr
 
 				| conditional_expr LESS plusmin_expr
 					{
+						printf("less\n");
 						$$=make_node(LESS, 0, "");
 						attach_node($$, $1);
 						attach_node($$, $3);
 					}
 				| conditional_expr GREATEREQ plusmin_expr
 					{
+						printf("greatereq\n");
 						$$=make_node(GREATEREQ, 0, "");
 						attach_node($$, $1);
 						attach_node($$, $3);
 					}
 				| conditional_expr LESSEQ plusmin_expr
 					{
+						printf("lesseq\n");
 						$$=make_node(LESSEQ, 0, "");
 						attach_node($$, $1);
 						attach_node($$, $3);
 					}
 				| conditional_expr EQUALS plusmin_expr
 					{
+						printf("equals\n");
 						$$=make_node(EQUALS, 0, "");
 						attach_node($$, $1);
 						attach_node($$, $3);
 					}
 				| conditional_expr NEQUALS plusmin_expr
 					{
+						printf("nequals\n");
 						$$=make_node(NEQUALS, 0, "");
 						attach_node($$, $1);
 						attach_node($$, $3);
 					}
-				| plusmin_expr {$$ = $1;}
+				| plusmin_expr {printf("going up\n");$$ = $1;}
 
 
 
 and_expr: and_expr AND conditional_expr 
 				{
+					printf("and\n");
 					$$ = make_node(AND, 0, "");
 					attach_node($$, $1);
 					attach_node($$, $3);
 				}
-			| conditional_expr {$$=$1;}
+			| conditional_expr {printf("going up\n");$$=$1;}
 
 
 
 or_expr: or_expr OR and_expr 
-				{
+				{ 
+					printf("or\n");
 					$$ = make_node(OR, 0, "");
 					attach_node($$, $1);
 					attach_node($$, $3);
 
 				}
-			| and_expr {$$ = $1;}
+			| and_expr {printf("going up\n");$$ = $1;}
 
 
 
 /* no precedence to worry about from here down */
 if: IF or_expr THEN stat 
 				{
+					printf("if\n");
 					$$ = make_node(IF, 0, "");
 					attach_node($$, $2);
 					attach_node($$, $4);
@@ -238,6 +251,7 @@ if: IF or_expr THEN stat
 
 assign: identifier EQUALS or_expr SEMICOLON 
 				{
+					printf("assign\n");
 					$$ = make_node(ASSIGN, 0 ,"");
 					attach_node($$, $1); //adds identifier to the tree
 					attach_node($$, $3); //adds stat to the tree
@@ -246,6 +260,7 @@ assign: identifier EQUALS or_expr SEMICOLON
 
 ifelse: IF or_expr THEN stat ELSE stat
 				{
+					printf("ifelse\n");
 					$$ = make_node(IF, 0, "");
 					attach_node($$, $2); //adds identifier to the tree
 					attach_node($$, $4); //adds stat to the tree
@@ -257,12 +272,14 @@ ifelse: IF or_expr THEN stat ELSE stat
 
 identifier: IDENTIFIER 
 		  {
+		  	printf("ident\n");
 		  	$$ = make_node(IDENTIFIER, 0, "");
 		  }
 
 
 while: WHILE or_expr DO stat
 				{
+					printf("while\n");
 					$$ = make_node(WHILE, 0, "");
 					attach_node($$, $2);
 					attach_node($$, $4);
@@ -271,12 +288,14 @@ while: WHILE or_expr DO stat
 
 print: PRINT or_expr SEMICOLON
 				{
+					printf("print\n");
 					$$=make_node(PRINT, 0, ""); 
 					attach_node($$, $2);
 				}
 
 value: VALUE
 		 {
+		 	printf("val\n");
 			 $$=make_node(VALUE, 0, "");
 		 } 
 
@@ -293,14 +312,14 @@ seq: START stats END
 
 stats: stat 
 			 {
-				printf("Making a statement");
-				$$ = make_node(STATEMENTS, 0, "");
+				printf("Making a statement \n");
+				$$ = make_node(STATEMENT, 0, "");
 				attach_node($$, $1);
 			 }
 		 | stats stat
 			 {
-				printf("Making statements");
-				$$ = make_node(STATEMENTS, 0, "");
+				printf("Making statements\n");
+				$$ = make_node(STATEMENT, 0, "");
 				attach_node($$, $1);
 				attach_node($$, $2);
 			 }
@@ -308,9 +327,9 @@ stats: stat
 
 program: stats 
 		   {
-			   printf("IN PROGRAM");
-			   tree = yyparse(); 
-			   printf("added element to tree");%
+			   printf("IN PROGRAM\n");
+			   tree = $1; 
+			   printf("added element to tree\n");
 		   }
 
 
@@ -325,8 +344,12 @@ void print_tree(struct Node* node, int tabs) {
   /* print leading tabs */
   for(i = 0; i < tabs; i++) {
 	 printf("entering for loop \n");
-     printf(" ");
+	 printf("%d\n", i);
+     printf("end for loop \n");
+	 fflush(stdout);
   }
+  printf("out of for loop\n");
+
 
   switch(node->type) {
     case IDENTIFIER: printf("IDENTIFIER: %s\n", node->id); break;
