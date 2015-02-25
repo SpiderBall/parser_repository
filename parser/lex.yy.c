@@ -804,153 +804,153 @@ case 1:
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
 #line 9 "lexer.l"
-{;}
+{ ;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 10 "lexer.l"
-{return VALUE;}
+{ return VALUE;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 11 "lexer.l"
-{return PLUS;}
+{ return PLUS;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 12 "lexer.l"
-{return MINUS;}
+{ return MINUS;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 13 "lexer.l"
-{return DIVIDE;}
+{ return DIVIDE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 14 "lexer.l"
-{return TIMES;}
+{ return TIMES;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 15 "lexer.l"
-{return LESS;}
+{ return LESS;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 16 "lexer.l"
-{return GREATER;}
+{ return GREATER;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 17 "lexer.l"
-{return LESSEQ;}
+{ return LESSEQ;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 18 "lexer.l"
-{return GREATEREQ;}
+{ return GREATEREQ;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 19 "lexer.l"
-{return EQUALS;}
+{ return EQUALS;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 20 "lexer.l"
-{return NEQUALS;}
+{ return NEQUALS;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 21 "lexer.l"
-{return AND;}
+{ return AND;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 22 "lexer.l"
-{return OR;}
+{ return OR;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 23 "lexer.l"
-{return NOT;}
+{ return NOT;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 24 "lexer.l"
-{return SEMICOLON;}
+{ return SEMICOLON;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 25 "lexer.l"
-{return ASSIGN;}
+{ return ASSIGN;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 26 "lexer.l"
-{return OPEN_PARENS;}
+{ return OPEN_PARENS;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 27 "lexer.l"
-{return CLOSE_PARENS;}
+{ return CLOSE_PARENS;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 28 "lexer.l"
-{return START;}
+{ return START;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 29 "lexer.l"
-{return END;}
+{ return END;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 30 "lexer.l"
-{return IF;}
+{ return IF;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 31 "lexer.l"
-{return THEN;}
+{ return THEN;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 32 "lexer.l"
-{return ELSE;}
+{ return ELSE;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 33 "lexer.l"
-{return DO;}
+{ return DO;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 34 "lexer.l"
-{return PRINT;}
+{ return PRINT;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 35 "lexer.l"
-{return INPUT;}
+{ return INPUT;}
 	YY_BREAK
 case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
 #line 36 "lexer.l"
-{;}
+{ ;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 37 "lexer.l"
-{return IDENTIFIER;}
+{ return IDENTIFIER;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 38 "lexer.l"
-{printf("unexpected character\n");}
+{ printf("unexpected character\n");}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP

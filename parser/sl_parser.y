@@ -57,8 +57,6 @@ void attach_node(struct Node* parent, struct Node* child) {
 
 struct Node* tree;
 
-
-
 %}
 
 
@@ -98,12 +96,9 @@ struct Node* tree;
 
 %type <node> if not_expr multdiv_expr plusmin_expr conditional_expr and_expr or_expr assign stat ifelse while print seq value identifier program stats paren_expr
 %error-verbose
-//TODO add stats cfg  which goes to stat, stats 
 %%
 //part III
 
-//how do i take terminals into account?
-//value is a problem since it is not of type Node
 stat: assign           { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
 	| if               { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
 	| ifelse           { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
@@ -112,169 +107,212 @@ stat: assign           { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
 	| seq              { $$ = make_node(STATEMENT, 0, "");attach_node($$, $1);}
 
 
+
+
+/* operators in order of precedence */
 paren_expr: OPEN_PARENS paren_expr CLOSE_PARENS {$$=$2;}
 		  | value {$$ = $1;}
 
-/* operators in order of precedence */
-not_expr: NOT not_expr 
-{
-	$$ = make_node(NOT, 0, "");
-	attach_node($$, $2);  /* not should always be to the left of a statement*/
-} 
-		| paren_expr {$$ = $1;}
 
-/*these should always be to the right of some statment */
+
+not_expr: NOT not_expr 
+					{
+						$$ = make_node(NOT, 0, "");
+						attach_node($$, $2);  
+						/* not should always be to the left of a statement*/
+					} 
+				| paren_expr {$$ = $1;}
+
+
+
 
 multdiv_expr: multdiv_expr TIMES not_expr
-			{
+					{
+						$$=make_node(TIMES, 0, "");
+						attach_node($$, $1);
+						attach_node($$, $3);
+					}
 
-				$$=make_node(TIMES, 0, "");
-				attach_node($$, $1);
-				attach_node($$, $3);
-			}
+				| multdiv_expr DIVIDE not_expr
+					{
+						$$=make_node(DIVIDE, 0, "");
+						attach_node($$, $1);
+						attach_node($$, $3);
+					} 
+				| not_expr {$$ = $1;}	
 
-			| multdiv_expr DIVIDE not_expr
-			{
-				$$=make_node(DIVIDE, 0, "");
-				attach_node($$, $1);
-				attach_node($$, $3);
-			} 
-			| not_expr {$$ = $1;}	
+
+
 
 plusmin_expr: plusmin_expr PLUS multdiv_expr
-			{
+					{
 
-				$$=make_node(PLUS, 0, "");
-				attach_node($$, $1);
-				attach_node($$, $3);
+						$$=make_node(PLUS, 0, "");
+						attach_node($$, $1);
+						attach_node($$, $3);
 
-			}
-			| plusmin_expr MINUS multdiv_expr 
+					}
+				| plusmin_expr MINUS multdiv_expr 
 
-			{
-				$$=make_node(MINUS, 0, "");
-				attach_node($$, $1);
-				attach_node($$, $3);
-			}
-			| multdiv_expr {$$ = $1;}
+					{
+						$$=make_node(MINUS, 0, "");
+						attach_node($$, $1);
+						attach_node($$, $3);
+					}
+				| multdiv_expr {$$ = $1;}
+
+
+
 
 conditional_expr: conditional_expr GREATER plusmin_expr
-				{
-					$$=make_node(GREATER, 0, "");
-					attach_node($$, $1);
-					attach_node($$, $3);
-				}
+					{
+						$$=make_node(GREATER, 0, "");
+						attach_node($$, $1);
+						attach_node($$, $3);
+					}
 
 				| conditional_expr LESS plusmin_expr
-				{
-					$$=make_node(LESS, 0, "");
-					attach_node($$, $1);
-					attach_node($$, $3);
-				}
+					{
+						$$=make_node(LESS, 0, "");
+						attach_node($$, $1);
+						attach_node($$, $3);
+					}
 				| conditional_expr GREATEREQ plusmin_expr
-				{
-					$$=make_node(GREATEREQ, 0, "");
-					attach_node($$, $1);
-					attach_node($$, $3);
-				}
+					{
+						$$=make_node(GREATEREQ, 0, "");
+						attach_node($$, $1);
+						attach_node($$, $3);
+					}
 				| conditional_expr LESSEQ plusmin_expr
-				{
-					$$=make_node(LESSEQ, 0, "");
-					attach_node($$, $1);
-					attach_node($$, $3);
-				}
+					{
+						$$=make_node(LESSEQ, 0, "");
+						attach_node($$, $1);
+						attach_node($$, $3);
+					}
 				| conditional_expr EQUALS plusmin_expr
-				{
-					$$=make_node(EQUALS, 0, "");
-					attach_node($$, $1);
-					attach_node($$, $3);
-				}
+					{
+						$$=make_node(EQUALS, 0, "");
+						attach_node($$, $1);
+						attach_node($$, $3);
+					}
 				| conditional_expr NEQUALS plusmin_expr
-				{
-					$$=make_node(NEQUALS, 0, "");
-					attach_node($$, $1);
-					attach_node($$, $3);
-				}
+					{
+						$$=make_node(NEQUALS, 0, "");
+						attach_node($$, $1);
+						attach_node($$, $3);
+					}
 				| plusmin_expr {$$ = $1;}
 
 
+
 and_expr: and_expr AND conditional_expr 
-{
-	$$ = make_node(AND, 0, "");
-	attach_node($$, $1);
-	attach_node($$, $3);
-}
+				{
+					$$ = make_node(AND, 0, "");
+					attach_node($$, $1);
+					attach_node($$, $3);
+				}
+			| conditional_expr {$$=$1;}
 
-		| conditional_expr {$$=$1;}
+
+
 or_expr: or_expr OR and_expr 
-{
-	$$ = make_node(OR, 0, "");
-	attach_node($$, $1);
-	attach_node($$, $3);
+				{
+					$$ = make_node(OR, 0, "");
+					attach_node($$, $1);
+					attach_node($$, $3);
 
-}
-		| and_expr {$$ = $1;}
+				}
+			| and_expr {$$ = $1;}
+
+
 
 /* no precedence to worry about from here down */
 if: IF or_expr THEN stat 
-{
-	$$ = make_node(IF, 0, "");
-	attach_node($$, $2);
-	attach_node($$, $4);
-}
+				{
+					$$ = make_node(IF, 0, "");
+					attach_node($$, $2);
+					attach_node($$, $4);
+				}
+
+
 
 assign: identifier EQUALS or_expr SEMICOLON 
-{
-	$$ = make_node(ASSIGN, 0 ,"");
-	attach_node($$, $1); //adds identifier to the tree
-	attach_node($$, $3); //adds stat to the tree
-}
+				{
+					$$ = make_node(ASSIGN, 0 ,"");
+					attach_node($$, $1); //adds identifier to the tree
+					attach_node($$, $3); //adds stat to the tree
+				}
+
 
 ifelse: IF or_expr THEN stat ELSE stat
-{
-	$$ = make_node(IF, 0, "");
-	attach_node($$, $2); //adds identifier to the tree
-	attach_node($$, $4); //adds stat to the tree
+				{
+					$$ = make_node(IF, 0, "");
+					attach_node($$, $2); //adds identifier to the tree
+					attach_node($$, $4); //adds stat to the tree
 
-	$$ = make_node(ELSE, 0, "");
-	attach_node($$, $6); //adds identifier to the tree
-}
+					$$ = make_node(ELSE, 0, "");
+					attach_node($$, $6); //adds identifier to the tree
+				}
 
-identifier: IDENTIFIER { $$ = make_node(IDENTIFIER, 0, "");}
+
+identifier: IDENTIFIER 
+		  {
+		  	$$ = make_node(IDENTIFIER, 0, "");
+		  }
+
 
 while: WHILE or_expr DO stat
-{
-	$$ = make_node(WHILE, 0, "");
-	attach_node($$, $2);
-	attach_node($$, $4);
-}
+				{
+					$$ = make_node(WHILE, 0, "");
+					attach_node($$, $2);
+					attach_node($$, $4);
+				}
+
 
 print: PRINT or_expr SEMICOLON
-{
-	$$=make_node(PRINT, 0, ""); 
-	attach_node($$, $2);
-}
+				{
+					$$=make_node(PRINT, 0, ""); 
+					attach_node($$, $2);
+				}
 
-value: VALUE{$$=make_node(VALUE, 0, "");} 
+value: VALUE
+		 {
+			 $$=make_node(VALUE, 0, "");
+		 } 
+
+
 
 //i originally had this as START stats END
 //but i figured Id try this
-seq: START stats END { $$ = $2;}
+
+seq: START stats END 
+			{
+				printf("starting sequence");
+				$$ = $2;
+			}
 
 stats: stat 
-	 {
-	 	$$ = make_node(STATEMENTS, 0, "");
-		attach_node($$, $1);
-	 }
-	 | stats stat
-	 {
-	 	$$ = make_node(STATEMENTS, 0, "");
-		attach_node($$, $1);
-		attach_node($$, $2);
-	 }
+			 {
+				printf("Making a statement");
+				$$ = make_node(STATEMENTS, 0, "");
+				attach_node($$, $1);
+			 }
+		 | stats stat
+			 {
+				printf("Making statements");
+				$$ = make_node(STATEMENTS, 0, "");
+				attach_node($$, $1);
+				attach_node($$, $2);
+			 }
 
-program:stats {tree = $1;printf("added element to tree");}
-//make this execute at the end of the program
+
+program: stats 
+		   {
+			   printf("IN PROGRAM");
+			   tree = yyparse(); 
+			   printf("added element to tree");%
+		   }
+
 
 %%
 void print_tree(struct Node* node, int tabs) {
@@ -338,7 +376,7 @@ int main(int argc, char* argv[])
 	printf("In main \n");
     stdin = fopen(argv[1], "r");    
 
-//    int token;
+//    int :`oken;
     
 //	do {token = yylex( ); printf("token \n");} while(token != 0);
 

@@ -81,7 +81,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 67 "sl_parser.y" /* yacc.c:1909  */
+#line 65 "sl_parser.y" /* yacc.c:1909  */
  char* char_array; struct Node * node; double Double;
 
 #line 88 "sl_parser.tab.h" /* yacc.c:1909  */
