@@ -45,7 +45,7 @@ struct Node* make_node(int type, double value, char* id) {
   /* return new node */
   return node;
 }
-int debug = 1;
+int debug = 0;
 
 /* attach an existing node onto a parent */
 void attach_node(struct Node* parent, struct Node* child) {
@@ -110,7 +110,7 @@ stat: assign           { $$=$1;}
 
 
 /* operators in order of precedence */
-paren_expr: OPEN_PARENS paren_expr CLOSE_PARENS {
+paren_expr: OPEN_PARENS conditional_expr CLOSE_PARENS {
 		  if(debug==1) printf("paren_expr\n");
 		  $$=$2;
 		  }
@@ -122,7 +122,7 @@ paren_expr: OPEN_PARENS paren_expr CLOSE_PARENS {
 	 	| identifier 
 			{
 				if(debug==1)printf("identifier");
-				$$=make_node(IDENTIFIER, 0, yylval.char_array);
+				$$=$1;
 			} 
 
 
@@ -297,8 +297,6 @@ ifelse: IF or_expr THEN stat ELSE stat
 					$$ = make_node(IF, 0, "");
 					attach_node($$, $2); //adds identifier to the tree
 					attach_node($$, $4); //adds stat to the tree
-
-					$$ = make_node(ELSE, 0, "");
 					attach_node($$, $6); //adds identifier to the tree
 				}
 

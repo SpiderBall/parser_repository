@@ -109,7 +109,7 @@ struct Node* make_node(int type, double value, char* id) {
   /* return new node */
   return node;
 }
-int debug = 1;
+int debug = 0;
 
 /* attach an existing node onto a parent */
 void attach_node(struct Node* parent, struct Node* child) {
@@ -511,8 +511,8 @@ static const yytype_uint16 yyrline[] =
        0,   102,   102,   103,   104,   105,   106,   107,   113,   117,
      122,   129,   136,   143,   151,   158,   165,   174,   182,   189,
      197,   204,   211,   218,   225,   232,   238,   245,   251,   259,
-     266,   276,   294,   306,   315,   322,   332,   340,   346,   352,
-     361,   368
+     266,   276,   294,   304,   313,   320,   330,   338,   344,   350,
+     359,   366
 };
 #endif
 
@@ -544,10 +544,10 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -36
+#define YYPACT_NINF -42
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-36)))
+  (!!((Yystate) == (-42)))
 
 #define YYTABLE_NINF -1
 
@@ -558,14 +558,14 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -2,   -36,    -2,     4,     4,     4,    -2,   -36,   -36,   -36,
-     -36,   -36,   -36,   -36,    23,    30,    35,   -36,     4,     6,
-     -36,   -36,   -36,     5,    24,    28,    44,     3,   -36,   -36,
-     -11,    36,   -36,   -36,     4,   -36,   -36,    39,     4,     4,
+      13,   -42,    13,     4,     4,     4,    13,   -42,   -42,   -42,
+     -42,   -42,   -42,   -42,    15,    -7,    26,   -42,     4,     4,
+     -42,   -42,   -42,    24,    22,    47,     5,    -3,   -42,   -42,
+      -5,     1,   -42,   -42,     4,   -42,   -42,    34,     4,     4,
        4,     4,     4,     4,     4,     4,     4,     4,     4,     4,
-      -2,    -2,   -36,    37,   -36,   -36,   -36,     5,     5,    24,
-      24,    24,    24,    24,    24,    28,    44,    38,   -36,   -36,
-      -2,   -36
+      13,    13,   -42,    23,   -42,   -42,   -42,    24,    24,    22,
+      22,    22,    22,    22,    22,    47,     5,    10,   -42,   -42,
+      13,   -42
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -586,8 +586,8 @@ static const yytype_uint8 yydefact[] =
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -36,   -35,    42,    -7,    16,     1,    14,    17,    -1,   -36,
-     -36,   -36,   -36,   -36,   -36,   -36,    12,   -36,     0
+     -42,   -41,   -42,   -13,    28,    20,   -18,   -11,    -1,   -42,
+     -42,   -42,   -42,   -42,   -42,   -42,    12,   -42,     0
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -602,25 +602,25 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      15,     1,    15,    30,    31,    49,    15,     1,    17,     1,
-      17,    36,    38,    39,    16,    67,    68,    51,    32,    49,
-       2,    18,     3,    33,    19,     4,    19,     5,    50,    40,
-      41,    55,    56,    53,    20,    71,    20,    42,    43,    44,
-      45,    46,    47,    59,    60,    61,    62,    63,    64,    34,
-      15,    15,    49,    49,    52,    69,    57,    58,    35,    48,
-      54,    37,    65,     0,    70,     0,    66,     0,     0,     0,
+      15,    37,    15,    30,    31,    36,    15,     1,    17,    67,
+      68,    49,    34,    49,    16,    33,     1,    49,    32,    52,
+      48,    18,    50,    51,    19,    55,    56,    40,    41,    71,
+      65,    38,    39,    53,    20,     2,    70,     3,    66,    49,
+       4,    69,     5,    42,    43,    44,    45,    46,    47,    35,
+      15,    15,     0,     0,     0,    54,    42,    43,    44,    45,
+      46,    47,    59,    60,    61,    62,    63,    64,    57,    58,
       15
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     3,     2,     4,     5,    16,     6,     3,     4,     3,
-       4,    18,     7,     8,     2,    50,    51,    28,     6,    16,
-      22,    17,    24,     0,    20,    27,    20,    29,    25,     5,
-       6,    38,    39,    34,    30,    70,    30,     9,    10,    11,
-      12,    13,    14,    42,    43,    44,    45,    46,    47,    19,
-      50,    51,    16,    16,    18,    18,    40,    41,    23,    15,
-      21,    19,    48,    -1,    26,    -1,    49,    -1,    -1,    -1,
+       0,    19,     2,     4,     5,    18,     6,     3,     4,    50,
+      51,    16,    19,    16,     2,     0,     3,    16,     6,    18,
+      15,    17,    25,    28,    20,    38,    39,     5,     6,    70,
+      48,     7,     8,    34,    30,    22,    26,    24,    49,    16,
+      27,    18,    29,     9,    10,    11,    12,    13,    14,    23,
+      50,    51,    -1,    -1,    -1,    21,     9,    10,    11,    12,
+      13,    14,    42,    43,    44,    45,    46,    47,    40,    41,
       70
 };
 
@@ -631,7 +631,7 @@ static const yytype_uint8 yystos[] =
        0,     3,    22,    24,    27,    29,    32,    40,    41,    42,
       43,    44,    46,    47,    48,    49,    47,     4,    17,    20,
       30,    33,    34,    35,    36,    37,    38,    39,    45,    49,
-      39,    39,    47,     0,    19,    23,    34,    33,     7,     8,
+      39,    39,    47,     0,    19,    23,    34,    37,     7,     8,
        5,     6,     9,    10,    11,    12,    13,    14,    15,    16,
       25,    28,    18,    39,    21,    34,    34,    35,    35,    36,
       36,    36,    36,    36,    36,    37,    38,    32,    32,    18,
@@ -1389,7 +1389,7 @@ yyreduce:
 #line 123 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("identifier");
-				(yyval.node)=make_node(IDENTIFIER, 0, yylval.char_array);
+				(yyval.node)=(yyvsp[0].node);
 			}
 #line 1395 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
@@ -1626,103 +1626,101 @@ yyreduce:
 					(yyval.node) = make_node(IF, 0, "");
 					attach_node((yyval.node), (yyvsp[-4].node)); //adds identifier to the tree
 					attach_node((yyval.node), (yyvsp[-2].node)); //adds stat to the tree
-
-					(yyval.node) = make_node(ELSE, 0, "");
 					attach_node((yyval.node), (yyvsp[0].node)); //adds identifier to the tree
 				}
-#line 1634 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1632 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 307 "sl_parser.y" /* yacc.c:1646  */
+#line 305 "sl_parser.y" /* yacc.c:1646  */
     {
 					if(debug==1)printf("while\n");
 					(yyval.node) = make_node(WHILE, 0, "");
 					attach_node((yyval.node), (yyvsp[-2].node));
 					attach_node((yyval.node), (yyvsp[0].node));
 				}
-#line 1645 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1643 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 316 "sl_parser.y" /* yacc.c:1646  */
+#line 314 "sl_parser.y" /* yacc.c:1646  */
     {
 					if(debug==1)printf("print\n");
 					(yyval.node)=make_node(PRINT, 0, ""); 
 					attach_node((yyval.node), (yyvsp[-1].node));
 				}
-#line 1655 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1653 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 323 "sl_parser.y" /* yacc.c:1646  */
+#line 321 "sl_parser.y" /* yacc.c:1646  */
     {
 		 	if(debug==1)printf("val\n");
 			 (yyval.node)=make_node(VALUE, yylval.Double, "");
 		 }
-#line 1664 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1662 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 333 "sl_parser.y" /* yacc.c:1646  */
+#line 331 "sl_parser.y" /* yacc.c:1646  */
     {
 			if(debug==1)printf("input");
 			(yyval.node)=make_node(INPUT, 0,"");
 		}
-#line 1673 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1671 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 341 "sl_parser.y" /* yacc.c:1646  */
+#line 339 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("starting sequence");
 				(yyval.node) = (yyvsp[-1].node);
 			}
-#line 1682 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1680 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 347 "sl_parser.y" /* yacc.c:1646  */
+#line 345 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("Making a statement \n");
 				(yyval.node) = make_node(STATEMENT, 0, "");
 				attach_node((yyval.node), (yyvsp[0].node));
 			 }
-#line 1692 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1690 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 353 "sl_parser.y" /* yacc.c:1646  */
+#line 351 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("Making statements\n");
 				(yyval.node) = make_node(STATEMENT, 0, "");
 				attach_node((yyval.node), (yyvsp[-1].node));
 				attach_node((yyval.node), (yyvsp[0].node));
 			 }
-#line 1703 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1701 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 362 "sl_parser.y" /* yacc.c:1646  */
+#line 360 "sl_parser.y" /* yacc.c:1646  */
     {
 			   if(debug==1)printf("IN PROGRAM\n");
 			   tree = (yyvsp[0].node); 
 			   if(debug==1)printf("added element to tree\n");
 		   }
-#line 1713 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1711 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 369 "sl_parser.y" /* yacc.c:1646  */
+#line 367 "sl_parser.y" /* yacc.c:1646  */
     {
 		  	if(debug==1)printf("iden\n");
 		  	(yyval.node) = make_node(IDENTIFIER, 0, yylval.char_array);
 		  }
-#line 1722 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1720 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1726 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1724 "sl_parser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1950,7 +1948,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 374 "sl_parser.y" /* yacc.c:1906  */
+#line 372 "sl_parser.y" /* yacc.c:1906  */
 
 void print_tree(struct Node* node, int tabs) {
   int i;
