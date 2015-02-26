@@ -7,7 +7,7 @@
 %%
 
 %.*$                      { ;}
-[1-9]*[0-9]*(\.)?[0-9]*   { return VALUE;}
+[1-9]*[0-9]*(\.)?[0-9]*   {yylval.Double = atoi(yytext); return VALUE;}
 "+"                       { return PLUS;}
 "-"                       { return MINUS;}
 "/"                       { return DIVIDE;}
@@ -30,11 +30,12 @@
 "if"                      { return IF;}
 "then"                    { return THEN;}
 "else"                    { return ELSE;}
-"while"                   { return DO;}
+"while"                   { return WHILE;}
+"do" 					  { return DO;}
 "print"                   { return PRINT;}
 "input"                   { return INPUT;}
 [ \t\n]                   { ;}
-[_a-zA-Z0-9]*[a-zA-Z0-9]* { return IDENTIFIER;}
+[_a-zA-Z0-9]*[a-zA-Z0-9]* { yylval.char_array = yytext; return IDENTIFIER;}
 .                         { printf("unexpected character\n");}
 %%
 
